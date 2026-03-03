@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1課 ワンさんは大学生ですか。</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── v5-1: Classic Brutalist — 经典粗犷 + dark/light ── */
+:root {
+  --bg: #fff; --fg: #000; --fg2: #888; --fg3: #ccc;
+  --card: #f8f8f8; --border: #000; --border2: #ddd;
+  --active-bg: #000; --active-fg: #fff;
+  --bar-bg: #eee; --bar-fill: #000;
+  --ruby: #999; --cn: #999;
+}
+[data-theme="dark"] {
+  --bg: #0a0a0a; --fg: #e0e0e0; --fg2: #666; --fg3: #333;
+  --card: #151515; --border: #e0e0e0; --border2: #262626;
+  --active-bg: #e0e0e0; --active-fg: #0a0a0a;
+  --bar-bg: #222; --bar-fill: #e0e0e0;
+  --ruby: #555; --cn: #555;
+}
+
+body {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  background: var(--bg); color: var(--fg);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  transition: background .2s, color .2s;
+}
+.container { max-width: 640px; margin: 0 auto; padding: 16px; }
+
+/* Header */
+.lesson-header { padding: 16px 0 20px; margin-bottom: 24px; }
+.lesson-header-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.lesson-tag {
+  display: inline-block; background: var(--fg); color: var(--bg);
+  font-size: 14px; font-weight: 700; padding: 6px 16px;
+  letter-spacing: 1px;
+}
+.btn-theme {
+  padding: 4px 10px; border: 1.5px solid var(--border); background: var(--bg);
+  color: var(--fg); font-size: 12px; cursor: pointer;
+  font-family: inherit; transition: all .15s;
+}
+.btn-theme:hover { background: var(--fg); color: var(--bg); }
+.lesson-title {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.4;
+}
+.lesson-meta {
+  font-size: 13px; color: var(--fg2);
+  border-bottom: 2px solid var(--fg); padding-bottom: 16px;
+}
+
+/* Player */
+.player {
+  border: 2px solid var(--fg); padding: 14px; margin-bottom: 24px;
+  transition: border-color .2s;
+}
+.player-main { display: flex; align-items: center; gap: 10px; }
+.btn-play {
+  width: 40px; height: 40px;
+  border: 2px solid var(--fg); background: var(--bg); color: var(--fg);
+  font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .1s; flex-shrink: 0;
+}
+.btn-play:hover { background: var(--fg); color: var(--bg); }
+.progress-wrap { flex: 1; }
+.progress-bar {
+  position: relative; height: 8px; background: var(--bar-bg);
+  cursor: pointer; overflow: visible;
+}
+.progress-fill {
+  height: 100%; background: var(--bar-fill); width: 0%;
+  pointer-events: none; position: relative;
+}
+.ab-region {
+  position: absolute; top: 0; height: 100%;
+  background: rgba(128,128,128,0.25); pointer-events: none; display: none;
+}
+.ab-marker {
+  position: absolute; top: -4px; width: 3px; height: 16px;
+  background: var(--fg); pointer-events: none; display: none;
+}
+.time-display {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--fg2); margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.player-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 6px; margin-top: 10px;
+  padding-top: 10px; border-top: 1px solid var(--border2);
+}
+.speed-group { display: flex; gap: 2px; }
+.btn-speed {
+  padding: 3px 8px; border: 1px solid var(--border2); background: var(--bg);
+  font-size: 12px; cursor: pointer; color: var(--fg2);
+  font-family: inherit; transition: all .1s;
+}
+.btn-speed.active { background: var(--active-bg); color: var(--active-fg); border-color: var(--active-bg); }
+.toggle-group { display: flex; align-items: center; gap: 6px; }
+.btn-toggle {
+  padding: 3px 10px; border: 1px solid var(--border2); background: var(--bg);
+  font-size: 12px; cursor: pointer; color: var(--fg2);
+  font-family: inherit; transition: all .1s;
+}
+.btn-toggle.active { background: var(--active-bg); color: var(--active-fg); border-color: var(--active-bg); }
+.loop-count {
+  font-size: 14px; color: var(--fg); font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--card); padding: 2px 8px;
+}
+
+/* Content toggles */
+.content-toggles { display: flex; gap: 4px; margin-bottom: 20px; }
+.btn-ct {
+  padding: 5px 14px; border: 2px solid var(--fg); background: var(--bg);
+  font-size: 13px; cursor: pointer; color: var(--fg);
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  transition: all .1s;
+}
+.btn-ct.active { background: var(--fg); color: var(--bg); }
+
+/* Sections */
+.section {
+  margin-bottom: 28px; padding-bottom: 24px;
+  border-bottom: 2px solid var(--fg);
+}
+.section-label {
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+  font-weight: 700; background: var(--card); display: inline-block;
+  padding: 2px 8px; margin-bottom: 14px;
+}
+.scene-note {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 15px; color: var(--fg2); margin-bottom: 14px;
+}
+.dialogue-line {
+  margin-bottom: 16px; padding-left: 12px;
+  border-left: 3px solid var(--fg);
+}
+.speaker {
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--fg2); margin-bottom: 2px;
+}
+.jp-text {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 22px; line-height: 2; font-weight: 500;
+}
+.jp-text ruby rt { font-size: 11px; color: var(--ruby); transition: opacity .2s; }
+.cn-text {
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: var(--cn); margin-top: 2px; transition: opacity .2s;
+}
+body.hide-ruby ruby rt { opacity: 0; }
+body.hide-cn .cn-text { display: none; }
+
+/* Grammar */
+.grammar-card {
+  padding: 10px 12px; margin-bottom: 4px;
+  background: var(--card); border-left: 3px solid var(--fg);
+}
+.grammar-jp {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 18px; font-weight: 600;
+}
+.grammar-cn {
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--fg2); margin-top: 2px;
+}
+.footer {
+  text-align: center; padding: 28px 0;
+  font-size: 9px; color: var(--fg3); letter-spacing: 4px; text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lesson-header">
+    <div class="lesson-header-row">
+      <div class="lesson-tag">第1課</div>
+      <button class="btn-theme" id="btnTheme">DARK</button>
+    </div>
+    <h1 class="lesson-title">ワンさんは大学生ですか。</h1>
+    <div class="lesson-meta">文化初級日本語 I // p.25 // track 1-1-26</div>
+  </div>
+
+  <div class="player">
+    <div class="player-main">
+      <button class="btn-play" id="btnPlay">&#9654;</button>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar">
+          <div class="ab-region" id="abRegion"></div>
+          <div class="ab-marker" id="markerA"></div>
+          <div class="ab-marker" id="markerB"></div>
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="time-display"><span id="timeCurrent">0:00</span><span id="timeDuration">0:00</span></div>
+      </div>
+    </div>
+    <div class="player-controls">
+      <div class="speed-group">
+        <button class="btn-speed" data-speed="0.5">.5x</button>
+        <button class="btn-speed" data-speed="0.75">.75</button>
+        <button class="btn-speed active" data-speed="1">1x</button>
+        <button class="btn-speed" data-speed="1.25">1.25</button>
+        <button class="btn-speed" data-speed="1.5">1.5x</button>
+      </div>
+      <div class="toggle-group">
+        <button class="btn-toggle" id="btnLoop">LOOP</button>
+        <button class="btn-toggle" id="btnAB">A-B</button>
+        <span class="loop-count" id="loopCount">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-toggles">
+    <button class="btn-ct active" id="btnRuby">振り仮名</button>
+    <button class="btn-ct active" id="btnCN">中文</button>
+  </div>
+
+  <div class="section">
+    <div class="section-label">DIALOGUE</div>
+    <div class="scene-note">（<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>館<rt>かん</rt></ruby>で）</div>
+    <div class="dialogue-line"><div class="speaker">HARA</div><div class="jp-text">はじめまして。<ruby>原<rt>はら</rt></ruby>です。</div><div class="cn-text">初次见面。我姓原。</div></div>
+    <div class="dialogue-line"><div class="speaker">WAN</div><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>はワンです。よろしくお<ruby>願<rt>ねが</rt></ruby>いします。</div><div class="cn-text">我是王。请多关照。</div></div>
+    <div class="dialogue-line"><div class="speaker">HARA</div><div class="jp-text">ワンさんは<ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>ですか。</div><div class="cn-text">王同学是大学生吗？</div></div>
+    <div class="dialogue-line"><div class="speaker">WAN</div><div class="jp-text">いいえ、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby>の<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>です。</div><div class="cn-text">不是，我是日语学校的学生。</div></div>
+    <div class="dialogue-line"><div class="speaker">HARA</div><div class="jp-text"><ruby>私<rt>わたし</rt></ruby>は<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>音<rt>おん</rt></ruby><ruby>楽<rt>がく</rt></ruby><ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>です。よろしく。</div><div class="cn-text">我是文化音乐大学的学生。请多关照。</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">GRAMMAR</div>
+    <div class="grammar-card"><div class="grammar-jp">～さんは～ですか。</div><div class="grammar-cn">～是～吗？（询问对方身份）</div></div>
+    <div class="grammar-card"><div class="grammar-jp">いいえ、～です。</div><div class="grammar-cn">不是，是～。（否定回答）</div></div>
+    <div class="grammar-card"><div class="grammar-jp">～の<ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>です。</div><div class="grammar-cn">是～的学生。（所属关系）</div></div>
+    <div class="grammar-card"><div class="grammar-jp">よろしく（お<ruby>願<rt>ねが</rt></ruby>いします）。</div><div class="grammar-cn">请多关照。（非正式/正式）</div></div>
+  </div>
+  <div class="footer">shadowing</div>
+</div>
+
+<audio id="audio" preload="auto" src="./1-1-26.mp3"></audio>
+<script>
+(function(){
+  var a=document.getElementById('audio'),bp=document.getElementById('btnPlay'),
+  pb=document.getElementById('progressBar'),pf=document.getElementById('progressFill'),
+  tc=document.getElementById('timeCurrent'),td=document.getElementById('timeDuration'),
+  bl=document.getElementById('btnLoop'),ba=document.getElementById('btnAB'),
+  ar=document.getElementById('abRegion'),ma=document.getElementById('markerA'),
+  mb=document.getElementById('markerB'),lc=document.getElementById('loopCount'),
+  br=document.getElementById('btnRuby'),bc=document.getElementById('btnCN'),
+  bt=document.getElementById('btnTheme');
+
+  // Theme
+  var theme=localStorage.getItem('jp-study-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  function applyTheme(){document.documentElement.setAttribute('data-theme',theme);bt.textContent=theme==='dark'?'LIGHT':'DARK';}
+  applyTheme();
+  bt.onclick=function(){theme=theme==='dark'?'light':'dark';localStorage.setItem('jp-study-theme',theme);applyTheme();};
+
+  var SK='jp-study-plays-1-1-26.mp3',cnt=+(localStorage.getItem(SK)||0),
+  abOn=false,pA=null,pB=null,drag=false;
+  function uc(){lc.textContent=cnt;}uc();
+  function fmt(s){if(!isFinite(s))return'0:00';return Math.floor(s/60)+':'+('0'+Math.floor(s%60)).slice(-2);}
+  bp.onclick=function(){a.paused?a.play():a.pause();};
+  a.onplay=function(){bp.innerHTML='&#10074;&#10074;';};
+  a.onpause=function(){bp.innerHTML='&#9654;';};
+  a.onended=function(){cnt++;localStorage.setItem(SK,cnt);uc();
+    if(a.loop){a.currentTime=0;a.play();}
+    else if(abOn&&pA!==null&&pB!==null){a.currentTime=pA;a.play();}};
+  a.onloadedmetadata=function(){td.textContent=fmt(a.duration);};
+  a.ontimeupdate=function(){if(!a.duration)return;
+    pf.style.width=(a.currentTime/a.duration*100)+'%';tc.textContent=fmt(a.currentTime);
+    if(abOn&&pA!==null&&pB!==null&&a.currentTime>=pB){a.currentTime=pA;cnt++;localStorage.setItem(SK,cnt);uc();}};
+  function ratio(e){var r=pb.getBoundingClientRect();return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));}
+  pb.onmousedown=function(e){if(abOn){hab(e);return;}drag=true;if(a.duration)a.currentTime=ratio(e)*a.duration;};
+  pb.ontouchstart=function(e){if(abOn){hab(e.touches[0]);return;}drag=true;if(a.duration)a.currentTime=ratio(e.touches[0])*a.duration;};
+  document.onmousemove=function(e){if(drag&&a.duration)a.currentTime=ratio(e)*a.duration;};
+  document.ontouchmove=function(e){if(drag&&a.duration)a.currentTime=ratio(e.touches[0])*a.duration;};
+  document.onmouseup=function(){drag=false;};document.ontouchend=function(){drag=false;};
+  function hab(e){if(!a.duration)return;var r=ratio(e),t=r*a.duration;
+    if(pA===null){pA=t;ma.style.left=r*100+'%';ma.style.display='block';}
+    else if(pB===null){pB=t;if(pB<pA){var tmp=pA;pA=pB;pB=tmp;}
+      var aR=pA/a.duration*100,bR=pB/a.duration*100;
+      ma.style.left=aR+'%';mb.style.left=bR+'%';mb.style.display='block';
+      ar.style.left=aR+'%';ar.style.width=(bR-aR)+'%';ar.style.display='block';
+      a.currentTime=pA;if(a.paused)a.play();}else{cab();}}
+  function cab(){pA=pB=null;ma.style.display=mb.style.display=ar.style.display='none';}
+  document.querySelectorAll('.btn-speed').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('.btn-speed').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');a.playbackRate=parseFloat(b.dataset.speed);};});
+  bl.onclick=function(){a.loop=!a.loop;bl.classList.toggle('active',a.loop);};
+  ba.onclick=function(){abOn=!abOn;ba.classList.toggle('active',abOn);if(!abOn)cab();};
+  br.onclick=function(){document.body.classList.toggle('hide-ruby');br.classList.toggle('active',!document.body.classList.contains('hide-ruby'));};
+  bc.onclick=function(){document.body.classList.toggle('hide-cn');bc.classList.toggle('active',!document.body.classList.contains('hide-cn'));};
+})();
+</script>
+</body>
+</html>
