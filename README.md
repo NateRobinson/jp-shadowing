@@ -7,24 +7,24 @@
 ## 课程目录
 
 - **第1課**
-  - [私はワン・シューミンです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01)
-  - [ワンさんは大学生ですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02)
-  - [休みはいつですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03)
+  - [p.24 私はワン・シューミンです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01)
+  - [p.25 ワンさんは大学生ですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02)
+  - [p.26 休みはいつですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03)
 - **第2課**
-  - [吉田良子さんの一日](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04)
-  - [昨日、何をしましたか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05)
+  - [p.32 吉田良子さんの一日](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04)
+  - [p.39 昨日、何をしましたか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05)
 - **第3課**
-  - [これは誰のノートですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-06)
+  - [p.42 これは誰のノートですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-06)
 - **第4課**
-  - [チンさんの部屋は広いですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-07)
-  - [あの大きいかばんは誰のですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-08)
+  - [p.49 チンさんの部屋は広いですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-07)
+  - [p.55 あの大きいかばんは誰のですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-08)
 - **第5課**
-  - [冷蔵庫の中にジュースがあります。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-09)
-  - [お手洗いはどこにありますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-10)
+  - [p.59 冷蔵庫の中にジュースがあります。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-09)
+  - [p.64 お手洗いはどこにありますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-10)
 - **第6課**
-  - [料理をしますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-11)
-  - [どんな映画が好きですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-12)
-  - [サッカーを見るのが好きです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-13)
+  - [p.70 料理をしますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-11)
+  - [p.74 どんな映画が好きですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-12)
+  - [p.80 サッカーを見るのが好きです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-13)
 
 ## 页面功能
 
