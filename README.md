@@ -58,3 +58,4 @@
 | # | 本文 | 在线练习 |
 |---|------|---------|
 | L02-1 | 吉田良子さんの一日 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
+| L02-2 | 昨日、何をしましたか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
