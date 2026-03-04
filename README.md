@@ -21,6 +21,18 @@
 | L02-1 | 吉田良子さんの一日 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
 | L02-2 | 昨日、何をしましたか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
 
+### 第3課
+
+| # | 本文 | 在线练习 |
+|---|------|---------|
+| L03-1 | これは誰のノートですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-06) |
+
+### 第4課
+
+| # | 本文 | 在线练习 |
+|---|------|---------|
+| L04-1 | チンさんの部屋は広いですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-07) |
+
 ## 页面功能
 
 <p align="center">
