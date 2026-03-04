@@ -129,8 +129,13 @@ cp ../mp3/{AUDIO_FILE} L{LESSON_NUM}-{HONBUN_NUM}/
 - 所有 JS（主题切换、播放器、A-B 复读、拖拽进度条、速度控制、播放计数、振り仮名/中文 toggle）
 - HTML 结构骨架（`.container` > `.lesson-header` > `.player` > `.content-toggles` > `.section` DIALOGUE > `.section` GRAMMAR > `.footer`）
 
-### 6. 汇报结果
+### 6. 更新 README
+
+在 `README.md` 的对应课程表格中追加新行。如果是新课（新的第X課），先添加课程标题行 `### 第X課`，再添加表格。
+
+### 7. 汇报结果
 
 完成后输出：
 - 列出生成的文件
 - 提示用户预览：`open L{LESSON_NUM}-{HONBUN_NUM}/index.html`
+- 提醒发布到 MyVibe 后更新 README 中的在线练习链接
