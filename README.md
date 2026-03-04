@@ -51,4 +51,10 @@
 |---|------|---------|
 | L01-1 | 私はワン・シューミンです。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
 | L01-2 | ワンさんは大学生ですか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
-| L01-3 | 休みはいつですか。 | [MyVibe](https://www.myvibe.so/xwgu007/ri-yu-ying-zi-gen-du-l01-3-xiu-mihaitudesuka) |
+| L01-3 | 休みはいつですか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
+
+### 第2課
+
+| # | 本文 | 在线练习 |
+|---|------|---------|
+| L02-1 | 吉田良子さんの一日 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |

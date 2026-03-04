@@ -112,7 +112,7 @@ cp ../mp3/{AUDIO_FILE} L{LESSON_NUM}-{HONBUN_NUM}/
 
 **需要替换的内容区域：**
 - `.scene-note` → 场景说明（日文原文）
-- `.dialogue-line` 列表 → 每行: `.speaker`（片假名名字的英文大写）+ `.jp-text`（日文 + ruby 注音）+ `.cn-text`（中文翻译）
+- `.dialogue-line` 列表 → 每行需加 `data-idx="0"` 递增属性: `.speaker`（片假名名字的英文大写）+ `.jp-text`（日文 + ruby 注音）+ `.cn-text`（中文翻译）
 - `.grammar-card` 列表 → 每张: `.grammar-jp`（句型 + ruby 注音）+ `.grammar-cn`（中文释义）
 
 **Ruby 注音规则（振り仮名）：**
@@ -124,18 +124,39 @@ cp ../mp3/{AUDIO_FILE} L{LESSON_NUM}-{HONBUN_NUM}/
 - 片假名人名转英文大写：ワン → WAN、ラフル → RAHUL、たなか → TANAKA
 - 如果是职业/身份：先生 → SENSEI、店員 → CLERK
 
+**需要替换的 JS 变量：**
+- `ts` 数组 → 每行对话的音频起始时间戳（见步骤 5.1）
+
 **绝对不能改动的部分：**
-- 所有 CSS（`:root` 变量、`[data-theme="dark"]`、所有类定义）
-- 所有 JS（主题切换、播放器、A-B 复读、拖拽进度条、速度控制、播放计数、振り仮名/中文 toggle）
+- 所有 CSS（`:root` 变量、`[data-theme="dark"]`、所有类定义、sync highlight、sticky player）
+- 所有 JS 逻辑（主题切换、播放器、A-B 复读、拖拽进度条、速度控制、播放计数、振り仮名/中文 toggle、localStorage 持久化、auto-highlight + click-to-seek、键盘空格控制）
 - HTML 结构骨架（`.container` > `.lesson-header` > `.player` > `.content-toggles` > `.section` DIALOGUE > `.section` GRAMMAR > `.footer`）
+
+### 5.1 生成音频时间戳
+
+用 ffmpeg 分析音频中的静音间隔，确定每行对话的起始时间：
+
+```bash
+ffmpeg -i L{LESSON_NUM}-{HONBUN_NUM}/{AUDIO_FILE} -af silencedetect=noise=-25dB:d=0.3 -f null - 2>&1 | grep -E "silence_(start|end)"
+```
+
+根据静音间隔（通常 ≥0.8s 为说话人切换）映射到对话行，得到每行的起始秒数数组。将结果填入 JS 中的 `ts` 数组，如 `ts=[4.7,10.9,15.6,17.5]`。
 
 ### 6. 更新 README
 
 在 `README.md` 的对应课程表格中追加新行。如果是新课（新的第X課），先添加课程标题行 `### 第X課`，再添加表格。
 
-### 7. 汇报结果
+### 7. 发布到 MyVibe
+
+使用 `/myvibe-publish --dir L{LESSON_NUM}-{HONBUN_NUM} --new` 发布。
+
+**Vibe 标题命名规则：** `JP Shadow Reading Lesson {序号}`，序号为两位数递增（01, 02, 03...），按课文生成的先后顺序编号，不按课号或本文号。
+
+发布后将生成的 MyVibe 链接更新到 README 课程表格中。
+
+### 8. 汇报结果
 
 完成后输出：
 - 列出生成的文件
 - 提示用户预览：`open L{LESSON_NUM}-{HONBUN_NUM}/index.html`
-- 提醒发布到 MyVibe 后更新 README 中的在线练习链接
+- 附上 MyVibe 在线链接
