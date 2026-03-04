@@ -49,13 +49,13 @@
 
 | # | 本文 | 在线练习 |
 |---|------|---------|
-| L01-1 | 私はワン・シューミンです。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
-| L01-2 | ワンさんは大学生ですか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
-| L01-3 | 休みはいつですか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
+| L01-1 | 私はワン・シューミンです。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
+| L01-2 | ワンさんは大学生ですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
+| L01-3 | 休みはいつですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
 
 ### 第2課
 
 | # | 本文 | 在线练习 |
 |---|------|---------|
-| L02-1 | 吉田良子さんの一日 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
-| L02-2 | 昨日、何をしましたか。 | [MyVibe](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
+| L02-1 | 吉田良子さんの一日 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
+| L02-2 | 昨日、何をしましたか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
