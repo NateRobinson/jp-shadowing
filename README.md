@@ -4,6 +4,23 @@
 
 每课生成一个独立的 HTML 页面，包含对话文本、注音、中文翻译和内置音频播放器，打开即用，无需安装。
 
+## 课程目录
+
+### 第1課
+
+| # | 本文 | 在线练习 |
+|---|------|---------|
+| L01-1 | 私はワン・シューミンです。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
+| L01-2 | ワンさんは大学生ですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
+| L01-3 | 休みはいつですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
+
+### 第2課
+
+| # | 本文 | 在线练习 |
+|---|------|---------|
+| L02-1 | 吉田良子さんの一日 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
+| L02-2 | 昨日、何をしましたか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
+
 ## 页面功能
 
 <p align="center">
@@ -42,20 +59,3 @@
 2. **第二遍** — 关闭中文，1x 正常速度，跟着音频同步朗读（影子跟读）
 3. **第三遍** — 关闭振り仮名，专注听力和汉字认读
 4. **难句攻克** — 用 A-B 复读锁定不熟练的句子，反复跟读直到流畅
-
-## 课程目录
-
-### 第1課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L01-1 | 私はワン・シューミンです。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
-| L01-2 | ワンさんは大学生ですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
-| L01-3 | 休みはいつですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
-
-### 第2課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L02-1 | 吉田良子さんの一日 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
-| L02-2 | 昨日、何をしましたか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
