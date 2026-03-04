@@ -6,48 +6,27 @@
 
 ## 课程目录
 
-### 第1課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L01-1 | 私はワン・シューミンです。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
-| L01-2 | ワンさんは大学生ですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
-| L01-3 | 休みはいつですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
-
-### 第2課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L02-1 | 吉田良子さんの一日 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
-| L02-2 | 昨日、何をしましたか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
-
-### 第3課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L03-1 | これは誰のノートですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-06) |
-
-### 第4課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L04-1 | チンさんの部屋は広いですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-07) |
-| L04-2 | あの大きいかばんは誰のですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-08) |
-
-### 第5課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L05-1 | 冷蔵庫の中にジュースがあります。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-09) |
-| L05-2 | お手洗いはどこにありますか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-10) |
-
-### 第6課
-
-| # | 本文 | 在线练习 |
-|---|------|---------|
-| L06-1 | 料理をしますか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-11) |
-| L06-2 | どんな映画が好きですか。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-12) |
-| L06-3 | サッカーを見るのが好きです。 | [开始练习 →](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-13) |
+| 課 | 本文 | 练习 |
+|:---|:-----|:----:|
+| **第1課** | | |
+| ├ L01-1 | 私はワン・シューミンです。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-01) |
+| ├ L01-2 | ワンさんは大学生ですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-02) |
+| └ L01-3 | 休みはいつですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-03) |
+| **第2課** | | |
+| ├ L02-1 | 吉田良子さんの一日 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-04) |
+| └ L02-2 | 昨日、何をしましたか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-05) |
+| **第3課** | | |
+| └ L03-1 | これは誰のノートですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-06) |
+| **第4課** | | |
+| ├ L04-1 | チンさんの部屋は広いですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-07) |
+| └ L04-2 | あの大きいかばんは誰のですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-08) |
+| **第5課** | | |
+| ├ L05-1 | 冷蔵庫の中にジュースがあります。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-09) |
+| └ L05-2 | お手洗いはどこにありますか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-10) |
+| **第6課** | | |
+| ├ L06-1 | 料理をしますか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-11) |
+| ├ L06-2 | どんな映画が好きですか。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-12) |
+| └ L06-3 | サッカーを見るのが好きです。 | [→](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-13) |
 
 ## 页面功能
 
