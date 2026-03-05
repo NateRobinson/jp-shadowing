@@ -25,6 +25,39 @@
   - [p.70 料理をしますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-11)
   - [p.74 どんな映画が好きですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-12)
   - [p.80 サッカーを見るのが好きです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-13)
+- **第7課**
+  - [p.84 財布を落としました。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-14)
+  - [p.89 黒くて小さい財布です。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-15)
+  - [p.93 ラフルさんの財布じゃありませんか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-16)
+- **第8課**
+  - [p.95 天気はどうでしたか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-17)
+  - [p.103 安くておいしかったです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-18)
+- **第9課**
+  - [p.106 説明をよく聞いてください。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-19)
+  - [p.111 本の探し方を説明します。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-20)
+  - [p.117 24日までに返してください。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-21)
+- **第10課**
+  - [p.120 東京から熱海まで、新幹線で行きます。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-22)
+  - [p.124 電話をしています。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-23)
+- **第11課**
+  - [p.127 私はマリー・マルタンです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-24)
+  - [p.134 私の家族](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-25)
+  - [p.135 デザインの勉強をしたいです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-26)
+- **第12課**
+  - [p.138 フライパンで牛丼を作ります。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-27)
+  - [p.143 たまねぎは柔らかくなりましたか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-28)
+- **第13課**
+  - [p.148 大学生活はどうですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-29)
+  - [p.153 どう思いますか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-30)
+  - [p.156 日本の大学生の生活について発表します。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-31)
+- **第14課**
+  - [p.158 3時17分に熱海に着いた。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-32)
+  - [p.163 本当に楽しい旅行だった。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-33)
+- **第15課**
+  - [p.166 どちらのほうが近いですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-34)
+  - [p.170 駅から遠すぎます。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-35)
+  - [p.171 どれがいちばん静かですか。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-36)
+  - [p.176 この中野の部屋は台所が広いです。](https://www.myvibe.so/xwgu007/jp-shadow-reading-lesson-37)
 
 ## 页面功能
 
