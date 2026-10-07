@@ -259,6 +259,7 @@ body.hide-cn .cn-text { display: none; }
     <div class="sidebar-header">
       SHADOWING
       <span>文化初級日本語 I</span>
+      <a href="kana/index.html" style="display:block;margin-top:8px;font-size:12px;color:var(--fg);text-decoration:underline;letter-spacing:1px">★ 五十音道場 KANA DOJO</a>
     </div>
     <div class="nav-group"><div class="nav-group-title">第01課</div><button class="nav-item" data-lesson="L01-1">私はワン・シューミンです。</button><button class="nav-item" data-lesson="L01-2">ワンさんは大学生ですか。</button><button class="nav-item" data-lesson="L01-3">休みはいつですか。</button></div><div class="nav-group"><div class="nav-group-title">第02課</div><button class="nav-item" data-lesson="L02-1">吉田良子さんの一日</button><button class="nav-item" data-lesson="L02-2">昨日、何をしましたか。</button></div><div class="nav-group"><div class="nav-group-title">第03課</div><button class="nav-item" data-lesson="L03-1">これは誰のノートですか。</button></div><div class="nav-group"><div class="nav-group-title">第04課</div><button class="nav-item" data-lesson="L04-1">チンさんの部屋は広いですか。</button><button class="nav-item" data-lesson="L04-2">あの大きいかばんは誰のですか。</button></div><div class="nav-group"><div class="nav-group-title">第05課</div><button class="nav-item" data-lesson="L05-1">冷蔵庫の中にジュースがあります...</button><button class="nav-item" data-lesson="L05-2">お手洗いはどこにありますか。</button></div><div class="nav-group"><div class="nav-group-title">第06課</div><button class="nav-item" data-lesson="L06-1">料理をしますか。</button><button class="nav-item" data-lesson="L06-2">どんな映画が好きですか。</button><button class="nav-item" data-lesson="L06-3">サッカーを見るのが好きです。</button></div><div class="nav-group"><div class="nav-group-title">第07課</div><button class="nav-item" data-lesson="L07-1">財布を落としました。</button><button class="nav-item" data-lesson="L07-2">黒くて小さい財布です。</button><button class="nav-item" data-lesson="L07-3">ラフルさんの財布じゃありません...</button></div><div class="nav-group"><div class="nav-group-title">第08課</div><button class="nav-item" data-lesson="L08-1">天気はどうでしたか。</button><button class="nav-item" data-lesson="L08-2">安くておいしかったです。</button></div><div class="nav-group"><div class="nav-group-title">第09課</div><button class="nav-item" data-lesson="L09-1">説明をよく聞いてください。</button><button class="nav-item" data-lesson="L09-2">本の探し方を説明します。</button><button class="nav-item" data-lesson="L09-3">24日までに返してください。</button></div><div class="nav-group"><div class="nav-group-title">第10課</div><button class="nav-item" data-lesson="L10-1">東京から熱海まで、新幹線で行き...</button><button class="nav-item" data-lesson="L10-2">電話をしています。</button></div><div class="nav-group"><div class="nav-group-title">第11課</div><button class="nav-item" data-lesson="L11-1">私はマリー・マルタンです。</button><button class="nav-item" data-lesson="L11-2">私の家族</button><button class="nav-item" data-lesson="L11-3">デザインの勉強をしたいです。</button></div><div class="nav-group"><div class="nav-group-title">第12課</div><button class="nav-item" data-lesson="L12-1">フライパンで牛丼を作ります。</button><button class="nav-item" data-lesson="L12-2">たまねぎは柔らかくなりましたか...</button></div><div class="nav-group"><div class="nav-group-title">第13課</div><button class="nav-item" data-lesson="L13-1">大学生活はどうですか。</button><button class="nav-item" data-lesson="L13-2">どう思いますか。</button><button class="nav-item" data-lesson="L13-3">日本の大学生の生活について発表...</button></div><div class="nav-group"><div class="nav-group-title">第14課</div><button class="nav-item" data-lesson="L14-1">3時17分に熱海に着いた。</button><button class="nav-item" data-lesson="L14-2">本当に楽しい旅行だった。</button></div><div class="nav-group"><div class="nav-group-title">第15課</div><button class="nav-item" data-lesson="L15-1">どちらのほうが近いですか。</button><button class="nav-item" data-lesson="L15-2">駅から遠すぎます。</button><button class="nav-item" data-lesson="L15-3">どれがいちばん静かですか。</button><button class="nav-item" data-lesson="L15-4">この中野の部屋は台所が広いです...</button></div>
   </nav>
@@ -320,7 +321,7 @@ body.hide-cn .cn-text { display: none; }
         <div class="section-label">GRAMMAR</div>
         <div id="grammarContent"></div>
       </div>
-      <div class="footer">shadowing · space to play/pause · ← → to switch</div>
+      <div class="footer">← → seek ±2s · ↑ ↓ prev/next · ⌥← ⌥→ switch lesson · space play/pause</div>
     </div>
   </div>
 </div>
@@ -516,9 +517,16 @@ body.hide-cn .cn-text { display: none; }
 
   // Keyboard
   document.onkeydown = function(e) {
+    if (e.metaKey || e.ctrlKey) return;
     if (e.code === 'Space') { e.preventDefault(); a.paused ? a.play() : a.pause(); }
-    else if (e.code === 'ArrowLeft' && e.altKey) { e.preventDefault(); loadLesson(currentIdx - 1); }
-    else if (e.code === 'ArrowRight' && e.altKey) { e.preventDefault(); loadLesson(currentIdx + 1); }
+    else if ((e.code === 'ArrowLeft' || e.code === 'ArrowRight') && e.altKey) { e.preventDefault(); loadLesson(currentIdx + (e.code === 'ArrowLeft' ? -1 : 1)); }
+    else if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') { e.preventDefault();
+      a.currentTime = Math.max(0, Math.min((a.duration || Infinity) - .05, a.currentTime + (e.code === 'ArrowLeft' ? -2 : 2))); }
+    else if (e.code === 'ArrowUp' || e.code === 'ArrowDown') { e.preventDefault();
+      var cur = -1;
+      for (var i = ts.length - 1; i >= 0; i--) { if (a.currentTime >= ts[i]) { cur = i; break; } }
+      a.currentTime = ts[e.code === 'ArrowDown' ? Math.min(cur + 1, ts.length - 1) : Math.max(cur - 1, 0)];
+      if (a.paused) a.play(); }
   };
 
   // Init: load last lesson or first

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五十音道場 — KANA DOJO</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fff; --fg: #000; --fg2: #888; --fg3: #ccc;
+  --card: #f8f8f8; --border: #000; --border2: #ddd;
+  --active-bg: #000; --active-fg: #fff;
+  --ruby: #999; --cn: #999;
+  --good: #16a34a; --bad: #dc2626; --slow: #d97706; --star: #f59e0b;
+}
+[data-theme="dark"] {
+  --bg: #0a0a0a; --fg: #e0e0e0; --fg2: #666; --fg3: #333;
+  --card: #151515; --border: #e0e0e0; --border2: #262626;
+  --active-bg: #e0e0e0; --active-fg: #0a0a0a;
+  --ruby: #555; --cn: #555;
+  --good: #4ade80; --bad: #f87171; --slow: #fbbf24; --star: #f59e0b;
+}
+
+body {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  background: var(--bg); color: var(--fg);
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
+  transition: background .2s, color .2s;
+}
+.container { max-width: 640px; margin: 0 auto; padding: 16px; }
+
+/* Header */
+.lesson-header { padding: 16px 0 20px; margin-bottom: 20px; }
+.lesson-header-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; gap: 8px;
+}
+.lesson-header-row .left { display: flex; align-items: center; gap: 8px; }
+.lesson-tag {
+  display: inline-block; background: var(--fg); color: var(--bg);
+  font-size: 14px; font-weight: 700; padding: 6px 16px;
+  letter-spacing: 1px;
+}
+.btn-back, .btn-theme {
+  padding: 4px 10px; border: 1.5px solid var(--border); background: var(--bg);
+  color: var(--fg); font-size: 12px; cursor: pointer;
+  font-family: inherit; transition: all .15s; text-decoration: none;
+}
+.btn-back:hover, .btn-theme:hover { background: var(--fg); color: var(--bg); }
+.lesson-title {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.4;
+}
+.lesson-meta {
+  font-size: 13px; color: var(--fg2);
+  border-bottom: 2px solid var(--fg); padding-bottom: 16px;
+}
+
+/* Cards */
+.card {
+  border: 2px solid var(--fg); background: var(--bg);
+  padding: 14px; margin-bottom: 20px;
+}
+.card-label {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  font-weight: 700; color: var(--fg2); margin-bottom: 10px;
+}
+
+/* Buttons / toggles */
+.seg { display: flex; gap: 4px; flex-wrap: wrap; }
+.seg button {
+  padding: 6px 14px; border: 2px solid var(--fg); background: var(--bg);
+  font-size: 13px; cursor: pointer; color: var(--fg);
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  transition: all .1s;
+}
+.seg button.active { background: var(--fg); color: var(--bg); }
+.mode-hint { font-size: 12px; color: var(--fg2); margin-top: 10px; line-height: 1.6; }
+.toggle-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+.btn-toggle {
+  padding: 4px 12px; border: 1px solid var(--border2); background: var(--bg);
+  font-size: 12px; cursor: pointer; color: var(--fg2);
+  font-family: inherit; transition: all .1s;
+}
+.btn-toggle.active { background: var(--active-bg); color: var(--active-fg); border-color: var(--active-bg); }
+.btn-toggle:disabled { opacity: .35; cursor: not-allowed; }
+.daily-stats {
+  font-size: 12px; color: var(--fg2); margin-top: 12px;
+  padding-top: 10px; border-top: 1px solid var(--border2);
+  font-variant-numeric: tabular-nums;
+}
+.daily-stats b { color: var(--fg); }
+
+/* Drill area */
+.drill { text-align: center; padding: 28px 14px; position: relative; }
+.drill-prompt {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 110px; font-weight: 700; line-height: 1.25; min-height: 130px;
+  user-select: none;
+}
+.drill-prompt.romaji { font-family: inherit; font-size: 84px; letter-spacing: 6px; }
+.drill-sub { font-size: 12px; color: var(--fg2); letter-spacing: 2px; min-height: 20px; }
+.answer-input {
+  margin-top: 18px; width: 220px; padding: 8px 12px;
+  border: 2px solid var(--fg); background: var(--bg); color: var(--fg);
+  font-family: inherit; font-size: 24px; text-align: center;
+  text-transform: lowercase; outline: none; letter-spacing: 4px;
+}
+.answer-input.good { border-color: var(--good); color: var(--good); }
+.answer-input.bad { border-color: var(--bad); color: var(--bad); }
+.rt-display {
+  font-size: 12px; color: var(--fg3); margin-top: 8px; min-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.rt-display.slow { color: var(--slow); }
+.feedback {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 20px; min-height: 30px; margin-top: 6px;
+}
+.feedback.good { color: var(--good); }
+.feedback.bad { color: var(--bad); }
+.btn-skip {
+  margin-top: 12px; padding: 4px 14px; border: 1px solid var(--border2);
+  background: none; color: var(--fg2); font-size: 12px; cursor: pointer;
+  font-family: inherit;
+}
+.btn-skip:hover { border-color: var(--fg); color: var(--fg); }
+.btn-reveal-group { margin-top: 18px; display: flex; gap: 8px; justify-content: center; }
+.btn-grade {
+  padding: 8px 22px; border: 2px solid var(--fg); background: var(--bg);
+  color: var(--fg); font-size: 15px; cursor: pointer; font-family: inherit;
+  transition: all .1s;
+}
+.btn-grade:hover { background: var(--fg); color: var(--bg); }
+.btn-grade .k { font-size: 11px; color: var(--fg2); margin-left: 6px; }
+.btn-grade:hover .k { color: inherit; }
+
+/* Grid */
+.grid-wrap { overflow-x: auto; }
+.kana-grid { border-collapse: collapse; margin: 0 auto; }
+.kana-grid td {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  width: 64px; height: 56px; text-align: center; font-size: 24px;
+  border: 1px solid var(--border2); cursor: pointer; position: relative;
+  transition: background .15s;
+}
+.kana-grid td:hover { border-color: var(--fg); }
+.kana-grid td.empty { border: none; cursor: default; }
+.kana-grid td .star-mark {
+  position: absolute; top: 1px; right: 4px; font-size: 10px; color: var(--star);
+}
+.kana-grid td.m-weak { background: rgba(220,38,38,.22); }
+.kana-grid td.m-mid { background: rgba(217,119,6,.20); }
+.kana-grid td.m-good { background: rgba(22,163,74,.20); }
+.kana-grid td.m-new { background: var(--card); color: var(--fg2); }
+.grid-legend {
+  display: flex; gap: 14px; justify-content: center; font-size: 11px;
+  color: var(--fg2); margin-top: 10px; flex-wrap: wrap;
+}
+.grid-legend i { display: inline-block; width: 10px; height: 10px; margin-right: 4px; vertical-align: -1px; }
+.l-weak { background: rgba(220,38,38,.35); }
+.l-mid { background: rgba(217,119,6,.32); }
+.l-good { background: rgba(22,163,74,.32); }
+.l-new { background: var(--card); border: 1px solid var(--border2); }
+.grid-detail {
+  margin-top: 14px; padding: 12px; border-top: 1px solid var(--border2);
+  font-size: 13px; display: none;
+}
+.grid-detail.show { display: block; }
+.grid-detail .big {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 44px; font-weight: 700; float: left; margin-right: 16px; line-height: 1.1;
+  cursor: pointer;
+}
+.grid-detail .stats { overflow: hidden; font-variant-numeric: tabular-nums; }
+.grid-detail .btn-star {
+  margin-top: 8px; padding: 3px 10px; border: 1px solid var(--border2);
+  background: none; font-size: 12px; cursor: pointer; color: var(--fg);
+  font-family: inherit;
+}
+.grid-detail .btn-star.on { border-color: var(--star); color: var(--star); }
+
+/* Method */
+details.method { margin-bottom: 20px; border: 2px solid var(--fg); }
+details.method summary {
+  padding: 10px 14px; cursor: pointer; font-size: 12px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; user-select: none;
+}
+details.method[open] summary { border-bottom: 1px solid var(--border2); }
+details.method .body {
+  padding: 14px; font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; line-height: 1.9; color: var(--fg);
+}
+details.method .body h4 {
+  font-size: 13px; margin: 12px 0 2px; letter-spacing: 1px;
+}
+details.method .body h4:first-child { margin-top: 0; }
+details.method .body em { color: var(--fg2); font-style: normal; }
+
+.footer {
+  text-align: center; padding: 28px 0;
+  font-size: 9px; color: var(--fg3); letter-spacing: 4px; text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .drill-prompt { font-size: 84px; }
+  .drill-prompt.romaji { font-size: 60px; }
+  .kana-grid td { width: 52px; height: 48px; font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lesson-header">
+    <div class="lesson-header-row">
+      <div class="left">
+        <div class="lesson-tag">五十音</div>
+        <a class="btn-back" href="../index.html">← 课程</a>
+      </div>
+      <button class="btn-theme" id="btnTheme">DARK</button>
+    </div>
+    <h1 class="lesson-title">ごじゅうおん道場</h1>
+    <div class="lesson-meta">随机提取 · 加权抽卡 · 错字插队 · 速度追踪 —— 打断顺序链条记忆</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">MODE / 模式</div>
+    <div class="seg" id="modeSeg">
+      <button data-mode="read" class="active">认读　假名 → 罗马音</button>
+      <button data-mode="recall">回想　罗马音 → 假名</button>
+    </div>
+    <div class="mode-hint" id="modeHint"></div>
+    <div class="toggle-row">
+      <button class="btn-toggle active" id="tHira" title="练习平假名（あ〜ん）">ひらがな</button>
+      <button class="btn-toggle" id="tKata" title="练习片假名（ア〜ン）">カタカナ</button>
+      <button class="btn-toggle" id="tDak" title="在清音基础上加入浊音・半浊音（が、ぱ…）">浊音·半浊音</button>
+      <button class="btn-toggle" id="tWeak" title="只抽掌握度最低的 30% + ★重点字">仅练薄弱 ⚔</button>
+      <button class="btn-toggle active" id="tVoice" title="答题后自动朗读假名（使用系统日语语音）">🔊 发音</button>
+    </div>
+    <div class="daily-stats" id="dailyStats">今日 0 题 · 正确率 — · 平均反应 —</div>
+  </div>
+
+  <div class="card drill" id="drillCard">
+    <div class="drill-prompt" id="prompt">あ</div>
+    <div class="drill-sub" id="promptSub">输入罗马音 + 回车</div>
+    <input class="answer-input" id="answer" autocomplete="off" autocorrect="off"
+           autocapitalize="off" spellcheck="false" inputmode="latin">
+    <div class="rt-display" id="rtDisplay">0.00 s</div>
+    <div class="feedback" id="feedback"></div>
+    <div class="btn-reveal-group" id="revealGroup" style="display:none">
+      <button class="btn-grade" id="gKnow">记得<span class="k">[1]</span></button>
+      <button class="btn-grade" id="gForgot">忘了<span class="k">[2]</span></button>
+    </div>
+    <button class="btn-skip" id="btnSkip">跳过 →</button>
+  </div>
+
+  <div class="card">
+    <div class="seg" id="gridSeg" style="margin-bottom:12px">
+      <button data-script="h" class="active">あ ひらがな全景</button>
+      <button data-script="k">ア カタカナ全景</button>
+    </div>
+    <div class="grid-wrap">
+      <table class="kana-grid" id="seionGrid"></table>
+      <table class="kana-grid" id="dakGrid" style="display:none; margin-top:10px"></table>
+    </div>
+    <div class="grid-legend">
+      <span><i class="l-weak"></i>薄弱</span>
+      <span><i class="l-mid"></i>一般</span>
+      <span><i class="l-good"></i>掌握</span>
+      <span><i class="l-new"></i>未练</span>
+      <span style="color:var(--star)">★ 重点</span>
+      <span>点击格子查看统计 / 设重点</span>
+    </div>
+    <div class="grid-detail" id="gridDetail"></div>
+  </div>
+
+  <details class="method">
+    <summary>METHOD / 方法论</summary>
+    <div class="body">
+      <h4>01 · 为什么必须随机</h4>
+      按顺序默写形成的是「链条记忆」——提取依赖上一个字的提示。真实使用中假名是孤立出现的，所以本工具完全随机出牌，强迫<em>独立提取</em>。这正是「看着眼熟、反应半天」的解药。
+      <h4>02 · 加权抽卡：越弱越常出现</h4>
+      每个假名有掌握度（准确率 + 反应速度 + 连对等级）。抽卡概率与薄弱程度成正比，已掌握的字会逐渐「退居二线」但不消失——间隔复习防止回生。
+      <h4>03 · 错字插队</h4>
+      答错的字会在几题之内再次出现，直到答对为止。错一次意味着这个字的提取强度不足，趁热打铁。
+      <h4>04 · 速度追踪：掌握 = 准确 + 快</h4>
+      「慢对」不算真掌握。2.5 秒内答对才升级；超过 4 秒的对题不升级。反应时间实时显示在输入框下方，给自己一点紧迫感。
+      <h4>05 · 两种方向</h4>
+      <em>认读</em>（假名→罗马音）训练识别；<em>回想</em>（罗马音→假名）训练输出——先在心里默写（或纸上写），按空格或点击大字揭示，再诚实自评（键盘 1 / 2）。输出方向往往更薄弱，也更重要。答题后自动朗读假名（🔊 可关），把发音和字形绑在一起记；答题后点击大字可重听。
+      <h4>06 · 全景图 + 重点轰炸</h4>
+      掌握度以颜色呈现，弱点一目了然。ぬ/め/れ、は/ほ、さ/ち、シ/ツ 这类易混字，点进全景图标 ★ 设为重点，它们会以更高频率出现，专项攻克。
+      <h4>建议路线</h4>
+      每天 5–10 分钟 → 平假名 46 清音刷到全绿 → 开カタカナ → 开浊音 → 回想模式查漏。比按顺序抄写十遍有效得多。
+    </div>
+  </details>
+
+  <div class="footer">kana dojo · random recall training</div>
+</div>
+
+<script>
+(function(){
+  // ── Data ──
+  var SEION = [
+    ['あ','ア','a'],['い','イ','i'],['う','ウ','u'],['え','エ','e'],['お','オ','o'],
+    ['か','カ','ka'],['き','キ','ki'],['く','ク','ku'],['け','ケ','ke'],['こ','コ','ko'],
+    ['さ','サ','sa'],['し','シ','shi'],['す','ス','su'],['せ','セ','se'],['そ','ソ','so'],
+    ['た','タ','ta'],['ち','チ','chi'],['つ','ツ','tsu'],['て','テ','te'],['と','ト','to'],
+    ['な','ナ','na'],['に','ニ','ni'],['ぬ','ヌ','nu'],['ね','ネ','ne'],['の','ノ','no'],
+    ['は','ハ','ha'],['ひ','ヒ','hi'],['ふ','フ','fu'],['へ','ヘ','he'],['ほ','ホ','ho'],
+    ['ま','マ','ma'],['み','ミ','mi'],['む','ム','mu'],['め','メ','me'],['も','モ','mo'],
+    ['や','ヤ','ya'],['ゆ','ユ','yu'],['よ','ヨ','yo'],
+    ['ら','ラ','ra'],['り','リ','ri'],['る','ル','ru'],['れ','レ','re'],['ろ','ロ','ro'],
+    ['わ','ワ','wa'],['を','ヲ','wo'],['ん','ン','n']
+  ];
+  var DAKUTEN = [
+    ['が','ガ','ga'],['ぎ','ギ','gi'],['ぐ','グ','gu'],['げ','ゲ','ge'],['ご','ゴ','go'],
+    ['ざ','ザ','za'],['じ','ジ','ji'],['ず','ズ','zu'],['ぜ','ゼ','ze'],['ぞ','ゾ','zo'],
+    ['だ','ダ','da'],['ぢ','ヂ','ji'],['づ','ヅ','zu'],['で','デ','de'],['ど','ド','do'],
+    ['ば','バ','ba'],['び','ビ','bi'],['ぶ','ブ','bu'],['べ','ベ','be'],['ぼ','ボ','bo'],
+    ['ぱ','パ','pa'],['ぴ','ピ','pi'],['ぷ','プ','pu'],['ぺ','ペ','pe'],['ぽ','ポ','po']
+  ];
+  // Alternative romaji accepted per kana char
+  var ALT = {
+    'し':['si'],'シ':['si'],'ち':['ti'],'チ':['ti'],'つ':['tu'],'ツ':['tu'],
+    'ふ':['hu'],'フ':['hu'],'じ':['zi'],'ジ':['zi'],
+    'ぢ':['di','dzi','ji'],'ヂ':['di','dzi','ji'],'づ':['du','dzu','zu'],'ヅ':['du','dzu','zu'],
+    'ん':['nn'],'ン':['nn'],'を':['o'],'ヲ':['o']
+  };
+  var MAP = {}; // char -> {h,k,r}
+  SEION.concat(DAKUTEN).forEach(function(d){ MAP[d[0]] = {h:d[0], k:d[1], r:d[2]}; MAP[d[1]] = {h:d[0], k:d[1], r:d[2]}; });
+
+  // Grid layout: rows of hiragana chars ('' = empty)
+  var GRID_SEION = [
+    ['あ','い','う','え','お'],['か','き','く','け','こ'],['さ','し','す','せ','そ'],
+    ['た','ち','つ','て','と'],['な','に','ぬ','ね','の'],['は','ひ','ふ','へ','ほ'],
+    ['ま','み','む','め','も'],['や','','ゆ','','よ'],['ら','り','る','れ','ろ'],
+    ['わ','','','','を'],['','','','','ん']
+  ];
+  var GRID_DAK = [
+    ['が','ぎ','ぐ','げ','ご'],['ざ','じ','ず','ぜ','ぞ'],['だ','ぢ','づ','で','ど'],
+    ['ば','び','ぶ','べ','ぼ'],['ぱ','ぴ','ぷ','ぺ','ぽ']
+  ];
+
+  // ── Storage ──
+  function jget(k, d){ try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e){ return d; } }
+  function jset(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
+
+  var cfg = jget('kana-dojo-cfg', {mode:'read', hira:true, kata:false, dak:false, weak:false, voice:true});
+  if (cfg.voice === undefined) cfg.voice = true; // coerce for old saves
+  var stats = jget('kana-dojo-stats', {});   // char -> {n,ok,box,st:[],rt:[],last}
+  var starred = jget('kana-dojo-star', []);
+  var today = new Date().toISOString().slice(0,10);
+  var daily = jget('kana-dojo-daily', {});
+  if (daily.d !== today) daily = {d: today, n:0, ok:0, rtSum:0};
+
+  function saveStats(){ jset('kana-dojo-stats', stats); }
+  function saveCfg(){ jset('kana-dojo-cfg', cfg); }
+
+  // ── TTS (Web Speech API) ──
+  var jaVoice = null;
+  function pickVoice(){
+    var vs = speechSynthesis.getVoices();
+    for (var i = 0; i < vs.length; i++) if (/^ja([-_]|$)/i.test(vs[i].lang)) { jaVoice = vs[i]; break; }
+  }
+  if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function speakKana(text, force){
+    if ((!cfg.voice && !force) || !('speechSynthesis' in window)) return;
+    try {
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ja-JP'; if (jaVoice) u.voice = jaVoice; u.rate = 0.9;
+      speechSynthesis.speak(u);
+    } catch(e){}
+  }
+
+  // ── Theme (shared key with lesson pages) ──
+  var bt = document.getElementById('btnTheme');
+  var theme = localStorage.getItem('jp-study-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  function applyTheme(){ document.documentElement.setAttribute('data-theme', theme); bt.textContent = theme==='dark' ? 'LIGHT' : 'DARK'; }
+  applyTheme();
+  bt.onclick = function(){ theme = theme==='dark' ? 'light' : 'dark'; localStorage.setItem('jp-study-theme', theme); applyTheme(); };
+
+  // ── Elements ──
+  var prompt = document.getElementById('prompt'), promptSub = document.getElementById('promptSub'),
+      answer = document.getElementById('answer'), rtDisplay = document.getElementById('rtDisplay'),
+      feedback = document.getElementById('feedback'), revealGroup = document.getElementById('revealGroup'),
+      btnSkip = document.getElementById('btnSkip'), dailyStats = document.getElementById('dailyStats'),
+      gridDetail = document.getElementById('gridDetail');
+
+  // ── Mastery model ──
+  function st(ch){ return stats[ch] || null; }
+  function median(arr){
+    if (!arr.length) return null;
+    var s = arr.slice().sort(function(a,b){return a-b;}), m = Math.floor(s.length/2);
+    return s.length % 2 ? s[m] : (s[m-1]+s[m])/2;
+  }
+  function mastery(ch){
+    var s = st(ch);
+    if (!s || !s.n) return null;
+    var acc = s.st.length ? s.st.reduce(function(a,b){return a+b;},0) / s.st.length : 0;
+    var med = median(s.rt);
+    var sp = med === null ? 0.5 : Math.max(0, Math.min(1, (4 - med) / 2.8)); // 1.2s→1, 4s→0
+    return 0.55*acc + 0.30*sp + 0.15*(s.box/6);
+  }
+  function weight(ch){
+    var m = mastery(ch); if (m === null) m = 0.4;
+    var s = st(ch);
+    var overdue = 0;
+    if (s && s.last) overdue = Math.min(2, (Date.now()-s.last) / 36e5 / 24); // +up to 2 after 24h
+    return Math.pow(1-m, 2) * 10 + 0.5 + overdue + (starred.indexOf(ch) >= 0 ? 6 : 0);
+  }
+  function grade(ch, correct, rt){
+    var s = stats[ch] || (stats[ch] = {n:0, ok:0, box:0, st:[], rt:[], last:0});
+    s.n++; s.last = Date.now();
+    if (correct) {
+      s.ok++;
+      s.st.push(1); if (s.st.length > 10) s.st.shift();
+      if (rt !== null && rt !== undefined) { s.rt.push(rt); if (s.rt.length > 10) s.rt.shift(); }
+      if (rt !== null && rt !== undefined && rt > 2.5 && s.box >= 2) { /* slow: hold */ }
+      else s.box = Math.min(6, s.box + 1);
+    } else {
+      s.st.push(0); if (s.st.length > 10) s.st.shift();
+      s.box = 0;
+    }
+    saveStats();
+  }
+
+  // ── Pool & selection ──
+  function buildPool(){
+    var pool = [];
+    if (cfg.hira) { SEION.forEach(function(d){ pool.push(d[0]); }); if (cfg.dak) DAKUTEN.forEach(function(d){ pool.push(d[0]); }); }
+    if (cfg.kata) { SEION.forEach(function(d){ pool.push(d[1]); }); if (cfg.dak) DAKUTEN.forEach(function(d){ pool.push(d[1]); }); }
+    if (!pool.length) { SEION.forEach(function(d){ pool.push(d[0]); }); } // safety
+    if (cfg.weak) {
+      pool = pool.slice().sort(function(a,b){
+        var ma = mastery(a); if (ma === null) ma = -0.1;
+        var mb = mastery(b); if (mb === null) mb = -0.1;
+        return ma - mb;
+      });
+      var keep = Math.max(8, Math.ceil(pool.length * 0.3));
+      pool = pool.slice(0, keep);
+      starred.forEach(function(ch){ if (pool.indexOf(ch) < 0 && MAP[ch]) pool.push(ch); });
+    }
+    return pool;
+  }
+  var queue = [], recent = [];
+  function pickNext(){
+    if (queue.length) {
+      // don't retest a char within the last 2 shown questions (recall, not re-recognition)
+      var i2 = -1;
+      for (var j = 0; j < queue.length; j++) {
+        if (recent.slice(0, 2).indexOf(queue[j]) < 0) { i2 = j; break; }
+      }
+      if (i2 >= 0) return queue.splice(i2, 1)[0];
+    }
+    var pool = buildPool();
+    var cands = pool.filter(function(c){ return recent.indexOf(c) < 0; });
+    if (cands.length < 2) cands = pool;
+    var total = cands.reduce(function(a,c){ return a + weight(c); }, 0), r = Math.random()*total;
+    for (var i = 0; i < cands.length; i++) { r -= weight(cands[i]); if (r <= 0) return cands[i]; }
+    return cands[cands.length-1];
+  }
+  function requeue(ch){
+    if (queue.length >= 6) return; // queue full: high weight already favors it
+    if (queue.filter(function(c){return c===ch;}).length >= 2) return; // cap duplicates
+    var i = Math.min(2, queue.length);
+    queue.splice(i, 0, ch);
+  }
+
+  // ── Drill flow ──
+  var cur = null, t0 = 0, phase = 'ask', rafId = 0, autoTimer = 0;
+
+  function startRT(){
+    cancelAnimationFrame(rafId);
+    (function tick(){
+      var s = (performance.now() - t0) / 1000;
+      rtDisplay.textContent = s.toFixed(2) + ' s';
+      rtDisplay.classList.toggle('slow', s > 2.5);
+      rafId = requestAnimationFrame(tick);
+    })();
+  }
+  function stopRT(){ cancelAnimationFrame(rafId); }
+
+  function nextQuestion(){
+    clearTimeout(autoTimer);
+    cur = pickNext();
+    recent.unshift(cur); if (recent.length > 6) recent.pop();
+    phase = 'ask'; feedback.textContent = ''; feedback.className = 'feedback';
+    answer.value = ''; answer.className = 'answer-input';
+    rtDisplay.textContent = '0.00 s'; rtDisplay.classList.remove('slow');
+    if (cfg.mode === 'read') {
+      prompt.textContent = cur; prompt.className = 'drill-prompt';
+      promptSub.textContent = '输入罗马音 + 回车';
+      answer.style.display = ''; revealGroup.style.display = 'none';
+      answer.disabled = false;
+      setTimeout(function(){ answer.focus(); }, 0);
+    } else {
+      prompt.textContent = MAP[cur].r; prompt.className = 'drill-prompt romaji';
+      promptSub.textContent = '心里默写 → 空格 / 点击大字揭示';
+      answer.style.display = 'none'; revealGroup.style.display = 'none';
+    }
+    t0 = performance.now();
+    if (cfg.mode === 'read') startRT();
+  }
+
+  function accepted(input, ch){
+    var v = input.normalize('NFKC').toLowerCase().trim();
+    var ok = v === MAP[ch].r;
+    if (!ok && ALT[ch] && ALT[ch].indexOf(v) >= 0) ok = true;
+    return ok;
+  }
+
+  function submitAnswer(){
+    if (phase !== 'ask' || cfg.mode !== 'read' || !cur) return;
+    if (!answer.value.trim()) return;
+    var rt = (performance.now() - t0) / 1000;
+    stopRT();
+    var good = accepted(answer.value, cur);
+    grade(cur, good, rt);
+    logDaily(good, rt);
+    phase = good ? 'good' : 'bad';
+    answer.className = 'answer-input ' + (good ? 'good' : 'bad');
+    rtDisplay.textContent = rt.toFixed(2) + ' s';
+    if (good) {
+      feedback.className = 'feedback good'; feedback.textContent = '◯ ' + MAP[cur].r;
+      autoTimer = setTimeout(nextQuestion, 650);
+    } else {
+      feedback.className = 'feedback bad';
+      feedback.textContent = '✕ ' + cur + ' = ' + MAP[cur].r + (MAP[cur].k ? ' / ' + MAP[cur].k : '');
+      promptSub.textContent = '点击大字重听发音';
+      requeue(cur);
+      autoTimer = setTimeout(nextQuestion, 1800);
+    }
+    speakKana(cur);
+    renderDaily(); renderGrids();
+  }
+
+  function reveal(){
+    if (cfg.mode !== 'recall' || phase !== 'ask' || !cur) return;
+    phase = 'reveal';
+    var k = MAP[cur];
+    var extra = (cfg.hira && cfg.kata) ? '   ' + k.k : '';
+    prompt.textContent = k.h + extra; prompt.className = 'drill-prompt';
+    promptSub.textContent = '诚实自评 · 1 记得 / 2 忘了';
+    revealGroup.style.display = 'flex';
+    speakKana(cur);
+  }
+  function selfGrade(know){
+    if (cfg.mode !== 'recall' || phase !== 'reveal' || !cur) return;
+    // grade every script char currently in pool for this sound
+    var k = MAP[cur];
+    var targets = [];
+    if (cfg.hira) targets.push(k.h);
+    if (cfg.kata) targets.push(k.k);
+    if (!targets.length) targets.push(cur);
+    targets.forEach(function(ch){ grade(ch, know, null); });
+    if (!know) { requeue(cur); if (cfg.hira && cfg.kata && cur === k.h) requeue(k.k); }
+    logDaily(know, null);
+    revealGroup.style.display = 'none';
+    feedback.className = 'feedback ' + (know ? 'good' : 'bad');
+    feedback.textContent = know ? '◯ ' + (targets.join(' ')) : '✕ 再来';
+    phase = 'graded';
+    autoTimer = setTimeout(nextQuestion, know ? 600 : 1400);
+    renderDaily(); renderGrids();
+  }
+
+  function logDaily(ok, rt){
+    daily.n++; if (ok) daily.ok++;
+    if (rt !== null && rt !== undefined) { daily.rtSum += rt; daily.rtN = (daily.rtN||0) + 1; }
+    jset('kana-dojo-daily', daily);
+  }
+  function renderDaily(){
+    var acc = daily.n ? Math.round(daily.ok/daily.n*100) + '%' : '—';
+    var avg = daily.rtN ? (daily.rtSum / daily.rtN).toFixed(1) + 's' : '—';
+    dailyStats.innerHTML = '今日 <b>' + daily.n + '</b> 题 · 正确率 <b>' + acc + '</b> · 打字平均反应 <b>' + avg + '</b>';
+  }
+
+  // ── Input events ──
+  answer.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') { e.preventDefault();
+      if (phase === 'ask') submitAnswer();
+      else nextQuestion();
+    }
+  });
+  answer.addEventListener('blur', function(){
+    if (cfg.mode === 'read') setTimeout(function(){ answer.focus(); }, 0);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey) return;
+    if (e.target === answer) return; // input handles its own keys
+    if (cfg.mode === 'recall') {
+      if (e.code === 'Space') { e.preventDefault(); phase === 'ask' ? reveal() : (phase === 'graded' && nextQuestion()); }
+      else if (phase === 'reveal' && e.key === '1') { e.preventDefault(); selfGrade(true); }
+      else if (phase === 'reveal' && e.key === '2') { e.preventDefault(); selfGrade(false); }
+    } else if (phase !== 'ask' && (e.code === 'Space' || e.key === 'Enter')) {
+      // only when input isn't capturing (feedback phase)
+      e.preventDefault(); nextQuestion();
+    }
+  });
+  document.getElementById('gKnow').onclick = function(){ selfGrade(true); };
+  document.getElementById('gForgot').onclick = function(){ selfGrade(false); };
+  btnSkip.onclick = function(){ nextQuestion(); };
+  // tap the big glyph: reveal (recall ask) or replay audio
+  prompt.onclick = function(){
+    if (cfg.mode === 'recall') {
+      if (phase === 'ask') reveal();
+      else if (phase === 'reveal' || phase === 'graded') speakKana(cur, true);
+    } else if (phase === 'good' || phase === 'bad') {
+      speakKana(cur, true);
+    }
+  };
+
+  // ── Settings UI ──
+  var modeSeg = document.getElementById('modeSeg');
+  var modeHint = document.getElementById('modeHint');
+  function syncModeHint(){
+    modeHint.textContent = cfg.mode === 'read'
+      ? '看假名 → 输入罗马音（si / ti / tu 等别拼也算对），按回车提交；答错会自动插队重现'
+      : '看罗马音 → 心里默写假名 → 按空格或点击大字揭示 → 诚实自评：1 记得 / 2 忘了';
+  }
+  modeSeg.querySelectorAll('button').forEach(function(b){
+    b.onclick = function(){
+      modeSeg.querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active'); cfg.mode = b.dataset.mode; saveCfg(); syncModeHint(); nextQuestion();
+    };
+  });
+  function bindToggle(id, key, cb){
+    var el = document.getElementById(id);
+    el.classList.toggle('active', !!cfg[key]);
+    el.onclick = function(){
+      cfg[key] = !cfg[key];
+      // keep at least one script on
+      if (!cfg.hira && !cfg.kata) { cfg[key === 'hira' ? 'kata' : 'hira'] = true; syncToggles(); }
+      el.classList.toggle('active', !!cfg[key]); saveCfg(); syncToggles(); if (cb) cb();
+    };
+    return el;
+  }
+  var tHira = bindToggle('tHira','hira'), tKata = bindToggle('tKata','kata'), tDak = bindToggle('tDak','dak'), tWeak = bindToggle('tWeak','weak'),
+      tVoice = bindToggle('tVoice','voice');
+  function syncToggles(){
+    tHira.classList.toggle('active', !!cfg.hira);
+    tKata.classList.toggle('active', !!cfg.kata);
+    tDak.classList.toggle('active', !!cfg.dak);
+    tWeak.classList.toggle('active', !!cfg.weak);
+    tVoice.classList.toggle('active', !!cfg.voice);
+  }
+
+  // ── Grid ──
+  var gridScript = 'h';
+  var gridSeg = document.getElementById('gridSeg');
+  gridSeg.querySelectorAll('button').forEach(function(b){
+    b.onclick = function(){
+      gridSeg.querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active'); gridScript = b.dataset.script; renderGrids();
+    };
+  });
+  function mClass(ch){
+    var m = mastery(ch);
+    if (m === null) return 'm-new';
+    if (m < 0.35) return 'm-weak';
+    if (m < 0.7) return 'm-mid';
+    return 'm-good';
+  }
+  function renderGrids(){
+    renderGrid(document.getElementById('seionGrid'), GRID_SEION);
+    var dg = document.getElementById('dakGrid');
+    renderGrid(dg, GRID_DAK);
+    dg.style.display = cfg.dak ? '' : 'none';
+  }
+  function renderGrid(table, rows){
+    table.innerHTML = '';
+    rows.forEach(function(row){
+      var tr = document.createElement('tr');
+      row.forEach(function(h){
+        var td = document.createElement('td');
+        if (!h) { td.className = 'empty'; }
+        else {
+          var ch = gridScript === 'h' ? h : MAP[h].k;
+          td.textContent = ch;
+          td.className = mClass(ch);
+          if (starred.indexOf(ch) >= 0) {
+            var s = document.createElement('span'); s.className = 'star-mark'; s.textContent = '★';
+            td.appendChild(s);
+          }
+          td.onclick = function(){ showDetail(ch); };
+        }
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+  }
+  function showDetail(ch){
+    var s = st(ch), m = mastery(ch);
+    var html = '<div class="big">' + ch + '</div><div class="stats">';
+    html += '罗马音 ' + MAP[ch].r + '　片假名 ' + MAP[ch].k + '<br>';
+    if (s && s.n) {
+      var acc = Math.round(s.ok/s.n*100);
+      var med = median(s.rt);
+      html += '答题 ' + s.n + ' 次 · 总正确率 ' + acc + '% · 近10次 ' +
+        Math.round(s.st.reduce(function(a,b){return a+b;},0)/s.st.length*100) + '%';
+      if (med !== null) html += ' · 反应中位 ' + med.toFixed(2) + 's';
+      html += ' · 等级 ' + s.box + '/6 · 掌握度 ' + (m !== null ? Math.round(m*100)+'%' : '—');
+    } else html += '<span style="color:var(--fg2)">未练过</span>';
+    html += '</div>';
+    var on = starred.indexOf(ch) >= 0;
+    html += '<button class="btn-star" id="btnSpeakCh">🔊 发音</button> ';
+    html += '<button class="btn-star' + (on ? ' on' : '') + '" data-ch="' + ch + '">' +
+      (on ? '★ 已设重点（点击取消）' : '☆ 设为重点 · 高频出现') + '</button>';
+    gridDetail.innerHTML = html;
+    gridDetail.classList.add('show');
+    gridDetail.querySelector('#btnSpeakCh').onclick = function(){ speakKana(ch, true); };
+    gridDetail.querySelector('.big').onclick = function(){ speakKana(ch, true); };
+    gridDetail.querySelector('.btn-star[data-ch]').onclick = function(){
+      var i = starred.indexOf(ch);
+      if (i >= 0) starred.splice(i, 1); else starred.push(ch);
+      jset('kana-dojo-star', starred);
+      renderGrids(); showDetail(ch);
+    };
+  }
+
+  // ── Init ──
+  if (cfg.mode === 'recall') {
+    modeSeg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === cfg.mode); });
+  }
+  syncToggles();
+  syncModeHint();
+  renderDaily();
+  renderGrids();
+  nextQuestion();
+})();
+</script>
+</body>
+</html>
