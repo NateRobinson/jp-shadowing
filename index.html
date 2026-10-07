@@ -363,7 +363,7 @@ body.hide-cn .cn-text { display: none; }
   ol.onclick = function() { sb.classList.remove('open'); ol.classList.remove('open'); };
 
   // State
-  var currentIdx = 0, ts = [], prevCur = -2, cnt = 0, SK = '';
+  var currentIdx = 0, ts = [], prevCur = -2, cnt = 0, SK = '', stopAt = null;
   var abOn = false, pA = null, pB = null, drag = false;
   var loopOn = localStorage.getItem('jp-study-loop') !== 'false';
   bl.classList.toggle('active', loopOn);
@@ -387,6 +387,7 @@ body.hide-cn .cn-text { display: none; }
     document.getElementById('grammarContent').innerHTML = L.grammarHTML;
     a.src = L.id + '/' + L.audioFile;
     a.load();
+    stopAt = null;
     ts = L.ts.split(',').map(Number);
     SK = 'jp-study-plays-' + L.audioFile;
     cnt = +(localStorage.getItem(SK) || 0);
@@ -431,14 +432,14 @@ body.hide-cn .cn-text { display: none; }
     document.querySelectorAll('#dialogueContent .dialogue-line[data-idx]').forEach(function(l) {
       l.onclick = function() {
         var idx = +l.dataset.idx;
-        if (ts[idx] !== undefined) { a.currentTime = ts[idx]; if (a.paused) a.play(); }
+        if (ts[idx] !== undefined) { a.currentTime = ts[idx]; stopAt = ts[idx + 1] !== undefined ? ts[idx + 1] : Infinity; if (a.paused) a.play(); else chk(); }
       };
     });
   }
 
   // Player controls
   bp.onclick = function() { a.paused ? a.play() : a.pause(); };
-  a.onplay = function() { bp.innerHTML = '&#10074;&#10074;'; };
+  a.onplay = function() { bp.innerHTML = '&#10074;&#10074;'; if (stopAt !== null) chk(); };
   a.onpause = function() { bp.innerHTML = '&#9654;'; };
   a.onended = function() {
     cnt++; localStorage.setItem(SK, cnt); lc.textContent = cnt;
@@ -450,15 +451,22 @@ body.hide-cn .cn-text { display: none; }
     if (!a.duration) return;
     pf.style.width = (a.currentTime / a.duration * 100) + '%';
     tc.textContent = fmt(a.currentTime);
+    if (stopAt !== null && !abOn && a.currentTime >= stopAt) { a.pause(); a.currentTime = stopAt - 0.01; stopAt = null; }
     if (abOn && pA !== null && pB !== null && a.currentTime >= pB) {
       a.currentTime = pA; cnt++; localStorage.setItem(SK, cnt); lc.textContent = cnt;
     }
     hlLine();
   };
 
+  function chk() {
+    if (stopAt === null || !isFinite(stopAt) || abOn || a.paused) return;
+    if (a.currentTime >= stopAt) { a.pause(); a.currentTime = stopAt - 0.01; stopAt = null; return; }
+    requestAnimationFrame(chk);
+  }
+
   function ratio(e) { var r = pb.getBoundingClientRect(); return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)); }
-  pb.onmousedown = function(e) { if (abOn) { hab(e); return; } drag = true; if (a.duration) a.currentTime = ratio(e) * a.duration; };
-  pb.ontouchstart = function(e) { if (abOn) { hab(e.touches[0]); return; } drag = true; if (a.duration) a.currentTime = ratio(e.touches[0]) * a.duration; };
+  pb.onmousedown = function(e) { if (abOn) { hab(e); return; } drag = true; stopAt = null; if (a.duration) a.currentTime = ratio(e) * a.duration; };
+  pb.ontouchstart = function(e) { if (abOn) { hab(e.touches[0]); return; } drag = true; stopAt = null; if (a.duration) a.currentTime = ratio(e.touches[0]) * a.duration; };
   document.onmousemove = function(e) { if (drag && a.duration) a.currentTime = ratio(e) * a.duration; };
   document.ontouchmove = function(e) { if (drag && a.duration) a.currentTime = ratio(e.touches[0]) * a.duration; };
   document.onmouseup = function() { drag = false; };
@@ -523,10 +531,11 @@ body.hide-cn .cn-text { display: none; }
     else if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') { e.preventDefault();
       a.currentTime = Math.max(0, Math.min((a.duration || Infinity) - .05, a.currentTime + (e.code === 'ArrowLeft' ? -2 : 2))); }
     else if (e.code === 'ArrowUp' || e.code === 'ArrowDown') { e.preventDefault();
-      var cur = -1;
+      var cur = -1, ni;
       for (var i = ts.length - 1; i >= 0; i--) { if (a.currentTime >= ts[i]) { cur = i; break; } }
-      a.currentTime = ts[e.code === 'ArrowDown' ? Math.min(cur + 1, ts.length - 1) : Math.max(cur - 1, 0)];
-      if (a.paused) a.play(); }
+      ni = e.code === 'ArrowDown' ? Math.min(cur + 1, ts.length - 1) : Math.max(cur - 1, 0);
+      a.currentTime = ts[ni]; stopAt = ts[ni + 1] !== undefined ? ts[ni + 1] : Infinity;
+      if (a.paused) a.play(); else chk(); }
   };
 
   // Init: load last lesson or first
