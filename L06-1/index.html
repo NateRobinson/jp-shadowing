@@ -260,7 +260,7 @@ body.hide-cn .cn-text { display: none; }
     <div class="grammar-card"><div class="grammar-jp">ときどき～ます</div><div class="grammar-cn">偶尔～</div></div>
     <div class="grammar-card"><div class="grammar-jp">～か～を～ます</div><div class="grammar-cn">～或～（选择）</div></div>
   </div>
-  <div class="footer">shadowing · space to play/pause</div>
+  <div class="footer">← → seek ±2s · ↑ ↓ prev/next · space play/pause</div>
 </div>
 
 <audio id="audio" preload="auto" src="./1-1-58.MP3"></audio>
@@ -341,7 +341,17 @@ body.hide-cn .cn-text { display: none; }
     var idx=+l.dataset.idx;
     if(ts[idx]!==undefined){a.currentTime=ts[idx];if(a.paused)a.play();}};});
 
-  document.onkeydown=function(e){if(e.code==='Space'){e.preventDefault();a.paused?a.play():a.pause();}};
+  document.onkeydown=function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;
+    if(e.code==='Space'){e.preventDefault();a.paused?a.play():a.pause();}
+    else if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();
+      a.currentTime=Math.max(0,Math.min((a.duration||Infinity)-.05,a.currentTime+(e.code==='ArrowLeft'?-2:2)));}
+    else if(e.code==='ArrowUp'||e.code==='ArrowDown'){e.preventDefault();
+      var cur=-1;
+      for(var i=ts.length-1;i>=0;i--){if(a.currentTime>=ts[i]){cur=i;break;}}
+      a.currentTime=ts[e.code==='ArrowDown'?Math.min(cur+1,ts.length-1):Math.max(cur-1,0)];
+      if(a.paused)a.play();}
+  };
 })();
 </script>
 </body>
